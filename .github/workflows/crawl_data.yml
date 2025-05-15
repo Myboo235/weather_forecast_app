@@ -44,12 +44,8 @@ jobs:
 
       - name: Commit results
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git pull
-          git add data/
-          git commit -m "data: update weather - $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
-          git push
+          chmod +x .github/scripts/safe_git_push.sh
+          .github/scripts/safe_git_push.sh "data: update weather" "data/"
 
   run-sarima-forecast:
     needs: crawl-weather
@@ -71,16 +67,14 @@ jobs:
       - name: Build all Docker services
         run: docker compose build model
 
-      - name: Run update SARIMA parameters
+      - name: Run SARIMA forecast
         run: |
           docker compose run --rm model python3 sarima/sarima_forecast.py
 
       - name: Commit results
         run: |
-          git pull
-          git add model/sarima
-          git commit -m "model: auto-run SARIMA forecast - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
-          git push
+          chmod +x .github/scripts/safe_git_push.sh
+          .github/scripts/safe_git_push.sh "model: auto-run SARIMA forecast" "model/sarima"
 
   run-dlinear-forecast:
     needs: crawl-weather
@@ -102,16 +96,14 @@ jobs:
       - name: Build all Docker services
         run: docker compose build model
 
-      - name: Run update SARIMA parameters
+      - name: Run DLinear forecast
         run: |
           docker compose run --rm model python3 dlinear/dlinear_forecast.py
 
       - name: Commit results
         run: |
-          git pull
-          git add model/dlinear
-          git commit -m "model: auto-run DLinear forecast - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
-          git push
+          chmod +x .github/scripts/safe_git_push.sh
+          .github/scripts/safe_git_push.sh "model: auto-run DLinear forecast" "model/dlinear"
 
   calculate-sarima-metrics:
     needs: run-sarima-forecast
@@ -133,16 +125,13 @@ jobs:
       - name: Build all Docker services
         run: docker compose build model
 
-      - name: Run update SARIMA parameters
-        run: |
-          docker compose run --rm model python3 sarima/calculate_last_metrics.py
+      - name: Run calculate SARIMA metrics
+        run: docker compose run --rm model python3 sarima/calculate_last_metrics.py
 
       - name: Commit results
         run: |
-          git pull
-          git add model/sarima
-          git commit -m "model: auto-calculate SARIMA metrics - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
-          git push
+          chmod +x .github/scripts/safe_git_push.sh
+          .github/scripts/safe_git_push.sh "model: auto-calculate SARIMA metrics" "model/sarima"
 
   calculate-dlinear-metrics:
     needs: run-dlinear-forecast
@@ -164,13 +153,10 @@ jobs:
       - name: Build all Docker services
         run: docker compose build model
 
-      - name: Run update SARIMA parameters
-        run: |
-          docker compose run --rm model python3 dlinear/calculate_last_metrics.py
+      - name: Run calculate DLinear metrics
+        run: docker compose run --rm model python3 dlinear/calculate_last_metrics.py
 
       - name: Commit results
         run: |
-          git pull
-          git add model/dlinear
-          git commit -m "model: auto-calculate DLinear metrics - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
-          git push
+          chmod +x .github/scripts/safe_git_push.sh
+          .github/scripts/safe_git_push.sh "model: auto-calculate DLinear metrics" "model/dlinear"
