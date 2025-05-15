@@ -1,0 +1,9 @@
+N_HOURS = 8
+
+N_FEATURES = 5
+
+N_PREDICT = 1
+
+EPOCHS = 30
+
+BATCH_SIZE = 16

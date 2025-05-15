@@ -1,0 +1,31 @@
+services:
+  crawler:
+    build:
+      context: .
+      dockerfile: ./crawler/Dockerfile.dev
+    environment:
+      - DISPLAY=:99
+    ports:
+      - "4444:4444"
+    volumes:
+      # - ./crawler/output
+      - ./crawler:/app
+      - ./data:/data
+      # mount timezone of current machine in linux
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+  
+  model:
+    build:
+      context: .
+      dockerfile: ./model/Dockerfile.dev
+    volumes:
+      - ./model:/app
+      - ./data:/data
+
+  data:
+    build:
+      context: .
+      dockerfile: ./data/Dockerfile.dev
+    volumes:
+      - ./data:/app

@@ -1,0 +1,13 @@
+FROM selenium/standalone-chrome
+
+WORKDIR /app
+COPY ./crawler/ .
+
+USER root
+
+RUN rm -f /usr/lib/python*/EXTERNALLY-MANAGED
+RUN python3 -m pip install -r requirements.txt
+
+EXPOSE 4444
+
+# CMD sleep infinity

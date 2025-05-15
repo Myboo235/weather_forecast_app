@@ -1,0 +1,142 @@
+{
+    "status": 200,
+    "message": "Success",
+    "monthly_temperatures": [
+        {
+            "date": "2025-04-01",
+            "min_temperature": 24.5,
+            "max_temperature": 30.0,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 25.0},
+                {"time": "03:00", "temperature": 24.5},
+                {"time": "06:00", "temperature": 25.2},
+                {"time": "09:00", "temperature": 27.3},
+                {"time": "12:00", "temperature": 29.5},
+                {"time": "15:00", "temperature": 30.0},
+                {"time": "18:00", "temperature": 28.4},
+                {"time": "21:00", "temperature": 26.8}
+            ]
+        },
+        {
+            "date": "2025-04-02",
+            "min_temperature": 27.0,
+            "max_temperature": 35.0,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 27.5},
+                {"time": "03:00", "temperature": 27.0},
+                {"time": "06:00", "temperature": 28.4},
+                {"time": "09:00", "temperature": 30.6},
+                {"time": "12:00", "temperature": 33.8},
+                {"time": "15:00", "temperature": 35.0},
+                {"time": "18:00", "temperature": 33.2},
+                {"time": "21:00", "temperature": 29.5}
+            ]
+        },
+        {
+            "date": "2025-04-03",
+            "min_temperature": 25.0,
+            "max_temperature": 31.0,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 26.0},
+                {"time": "03:00", "temperature": 25.0},
+                {"time": "06:00", "temperature": 25.8},
+                {"time": "09:00", "temperature": 27.5},
+                {"time": "12:00", "temperature": 30.2},
+                {"time": "15:00", "temperature": 31.0},
+                {"time": "18:00", "temperature": 29.5},
+                {"time": "21:00", "temperature": 27.8}
+            ]
+        },
+        {
+            "date": "2025-04-04",
+            "min_temperature": 28.0,
+            "max_temperature": 30.7,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 28.5},
+                {"time": "03:00", "temperature": 28.0},
+                {"time": "06:00", "temperature": 28.3},
+                {"time": "09:00", "temperature": 29.1},
+                {"time": "12:00", "temperature": 30.4},
+                {"time": "15:00", "temperature": 30.7},
+                {"time": "18:00", "temperature": 30.1},
+                {"time": "21:00", "temperature": 29.3}
+            ]
+        },
+        {
+            "date": "2025-04-05",
+            "min_temperature": 27.0,
+            "max_temperature": 31.0,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 27.5},
+                {"time": "03:00", "temperature": 27.0},
+                {"time": "06:00", "temperature": 27.8},
+                {"time": "09:00", "temperature": 29.3},
+                {"time": "12:00", "temperature": 30.5},
+                {"time": "15:00", "temperature": 31.0},
+                {"time": "18:00", "temperature": 30.2},
+                {"time": "21:00", "temperature": 28.4}
+            ]
+        },
+        {
+            "date": "2025-04-06",
+            "min_temperature": 32.0,
+            "max_temperature": 35.0,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 32.5},
+                {"time": "03:00", "temperature": 32.0},
+                {"time": "06:00", "temperature": 32.8},
+                {"time": "09:00", "temperature": 33.6},
+                {"time": "12:00", "temperature": 34.7},
+                {"time": "15:00", "temperature": 35.0},
+                {"time": "18:00", "temperature": 34.2},
+                {"time": "21:00", "temperature": 33.1}
+            ]
+        },
+        {
+            "date": "2025-04-07",
+            "min_temperature": 25.8,
+            "max_temperature": 31.4,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 26.5},
+                {"time": "03:00", "temperature": 25.8},
+                {"time": "06:00", "temperature": 26.7},
+                {"time": "09:00", "temperature": 28.4},
+                {"time": "12:00", "temperature": 30.6},
+                {"time": "15:00", "temperature": 31.4},
+                {"time": "18:00", "temperature": 30.1},
+                {"time": "21:00", "temperature": 28.3}
+            ]
+        },
+        {
+            "date": "2025-04-08",
+            "min_temperature": 26.0,
+            "max_temperature": 31.6,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 26.8},
+                {"time": "03:00", "temperature": 26.0},
+                {"time": "06:00", "temperature": 27.2},
+                {"time": "09:00", "temperature": 29.0},
+                {"time": "12:00", "temperature": 31.0},
+                {"time": "15:00", "temperature": 31.6},
+                {"time": "18:00", "temperature": 30.5},
+                {"time": "21:00", "temperature": 28.7}
+            ]
+        },
+        {
+            "date": "2025-04-09",
+            "min_temperature": 24.0,
+            "max_temperature": 37.0,
+            "hourly_data": [
+                {"time": "00:00", "temperature": 24.8},
+                {"time": "03:00", "temperature": 24.0},
+                {"time": "06:00", "temperature": 25.5},
+                {"time": "09:00", "temperature": 28.7},
+                {"time": "12:00", "temperature": 33.5},
+                {"time": "15:00", "temperature": 37.0},
+                {"time": "18:00", "temperature": 32.6},
+                {"time": "21:00", "temperature": 27.5}
+            ]
+        }
+    ]
+}
+

@@ -1,0 +1,35 @@
+name: Run SARIMA forecast
+
+on:
+  push:
+    branches:
+      - "fix_cronjob"
+      - "main"
+  workflow_dispatch:
+
+jobs:
+  run-sarima-forecast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Compose
+        run: docker compose version
+
+      - name: Build all Docker services
+        run: docker compose build model
+
+      - name: Run update SARIMA parameters
+        run: |
+          docker compose run --rm model python3 sarima/sarima_forecast.py
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull
+          git add model/sarima
+          git commit -m "model: auto-run SARIMA forecast - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push

@@ -1,0 +1,40 @@
+name: Update DLinear model
+
+on:
+  push:
+    branches:
+      - "fix_cronjob"
+  schedule:
+    - cron: "10 1 * * 6" # Every saturday at 1:10 a.m
+  workflow_dispatch:
+
+jobs:
+  update-dlinear-model:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull newest data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull
+
+      - name: Set up Docker Compose
+        run: docker compose version
+
+      - name: Build all Docker services
+        run: docker compose build model
+
+      - name: Run update DLinear model
+        run: |
+          docker compose run --rm model python3 -u dlinear/update_model.py
+
+      - name: Commit results
+        run: |
+          git pull
+          git add model/dlinear
+          git commit -m "chore: auto-update DLinear model - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push

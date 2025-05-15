@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#34A5DA">
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="manifest" href="/ui/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Gradio Lite PWA</title>
+</head>
+
+<body>
+    <script src="script.js"></script>
+    <div class="header">
+    </div>
+
+    <div class="container">
+        <div class="current_weather_container">
+
+            <div class="current_weather_header">
+                <h3>CURRENT WEATHER</h3>
+                <p class="current_time"></p>
+            </div>
+
+            <div class="current_weather_data">
+                <div class="current_temp">🌡️</div>
+                <div class="current_wind">💨</div>
+                <div class="current_rain">🌧️</div>
+            </div>
+        </div>
+
+        <div class="hourly_forecast_container" id="hourly_forecast_container">
+            <div class="hourly_forecast_header">
+                <div>
+                    <h3>Hourly Weather Forecast</h3>
+                    <p>LSTM Forecast for the next 24 hours</p>
+                </div>
+
+                <div class="metrics_evaluation">
+                    <div class="metrics_evaluation_item">
+                        <h3>📊 Độ lệch trung bình: 1.2°C</h3>
+
+                    </div>
+                    <div class="metrics_evaluation_item">
+                        <h3>📈 Độ lệch lớn nhất: 2°C</h3>
+                    </div>
+
+                </div>
+            </div>
+            <div class="scroll">
+                <button class="left" onclick="leftScroll()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-left-icon lucide-chevron-left">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                </button>
+                <div class="hourly_forecast_cards">
+                </div>
+                <button class="right" onclick="rightScroll()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-right-icon lucide-chevron-right">
+                        <path d="m9 18 6-6-6-6" />
+                    </svg>
+                </button>
+            </div>
+            <div class="metrics_evaluation_header">
+                <h3>Metrics Evaluation</h3>
+                <p>Evaluation of the LSTM model</p>
+            </div>
+        </div>
+        <div class="weekly_forecast_container" id="weekly_forecast_container">
+            <div class="weekly_forecast_header">
+                <h3>Weekly Weather Forecast</h3>
+                <p>Forecast for the next 7 days</p>
+            </div>
+            <div class="weekly_forecast_cards">
+            </div>
+        </div>
+
+        <div class="chart">
+            <canvas id="AreaChart" style="width: 100%;"></canvas>
+        </div>
+        <div class="chart">
+            <canvas id="LineChart" style="width: 100%;"></canvas>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Powered by Gradio</p>
+    </div>
+
+</body>
+
+</html>

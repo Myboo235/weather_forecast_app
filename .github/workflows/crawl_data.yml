@@ -1,0 +1,176 @@
+name: weather crawler action
+
+on:
+  push:
+    branches:
+      - "fix_cronjob"
+  schedule:
+    - cron: "10,40 * * * *" # Every 30 minutes starting at 00:10 and 00:40 UTC
+  workflow_dispatch:
+
+jobs:
+  crawl-weather:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Compose
+        run: docker compose version
+
+      - name: Build all Docker services
+        run: docker compose build crawler data
+
+      - name: Run crawler (custom command)
+        run: |
+          docker compose run --rm crawler python3 crawler.py --output /data/data_online.csv
+
+      - name: Merge data
+        run: |
+          if [ -s "data/data_online.csv" ]; then
+            docker compose run --rm data python3 merge_data.py
+          else
+            echo "No data to merge. Skipping."
+          fi
+
+      - name: Check missing data_batch
+        run: |
+          docker compose run --rm data python3 check_missing.py
+
+      - name: Normalize data and save scaler
+        run: |
+          docker compose run --rm data python3 normalize_data.py
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull
+          git add data/
+          git commit -m "data: update weather - $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
+          git push
+
+  run-sarima-forecast:
+    needs: crawl-weather
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull newest data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull
+
+      - name: Set up Docker Compose
+        run: docker compose version
+
+      - name: Build all Docker services
+        run: docker compose build model
+
+      - name: Run update SARIMA parameters
+        run: |
+          docker compose run --rm model python3 sarima/sarima_forecast.py
+
+      - name: Commit results
+        run: |
+          git pull
+          git add model/sarima
+          git commit -m "model: auto-run SARIMA forecast - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push
+
+  run-dlinear-forecast:
+    needs: crawl-weather
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull newest data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull
+
+      - name: Set up Docker Compose
+        run: docker compose version
+
+      - name: Build all Docker services
+        run: docker compose build model
+
+      - name: Run update SARIMA parameters
+        run: |
+          docker compose run --rm model python3 dlinear/dlinear_forecast.py
+
+      - name: Commit results
+        run: |
+          git pull
+          git add model/dlinear
+          git commit -m "model: auto-run DLinear forecast - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push
+
+  calculate-sarima-metrics:
+    needs: run-sarima-forecast
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull newest data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull
+
+      - name: Set up Docker Compose
+        run: docker compose version
+
+      - name: Build all Docker services
+        run: docker compose build model
+
+      - name: Run update SARIMA parameters
+        run: |
+          docker compose run --rm model python3 sarima/calculate_last_metrics.py
+
+      - name: Commit results
+        run: |
+          git pull
+          git add model/sarima
+          git commit -m "model: auto-calculate SARIMA metrics - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push
+
+  calculate-dlinear-metrics:
+    needs: run-dlinear-forecast
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull newest data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull
+
+      - name: Set up Docker Compose
+        run: docker compose version
+
+      - name: Build all Docker services
+        run: docker compose build model
+
+      - name: Run update SARIMA parameters
+        run: |
+          docker compose run --rm model python3 dlinear/calculate_last_metrics.py
+
+      - name: Commit results
+        run: |
+          git pull
+          git add model/dlinear
+          git commit -m "model: auto-calculate DLinear metrics - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git push
