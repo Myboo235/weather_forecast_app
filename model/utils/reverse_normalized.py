@@ -18,5 +18,5 @@ def inverse_predicted_z_scores(df, column_name, scaler_path):
     else:
         restored = scaler.inverse_transform(z_scores)
 
-    df['temp'] = restored
+    df.loc[:, 'temp'] = restored
     return df

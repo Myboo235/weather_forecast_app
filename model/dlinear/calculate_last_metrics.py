@@ -16,6 +16,9 @@ def calculate_last_metrics():
     train_df = weather_df.iloc[:-8]
     test_df = weather_df.iloc[-8:]
 
+    test_df_reverse_normalized = inverse_predicted_z_scores(test_df, "y", "../../../data/scaler.pkl")
+
+
     model = DLinear(
         h=8,
         input_size=24,
@@ -34,8 +37,8 @@ def calculate_last_metrics():
     forecast_reverse_normalized = inverse_predicted_z_scores(forecast_df, 'DLinear', "../../../data/scaler.pkl")
     forecast_reverse_normalized.to_csv("./dlinear/last_predict_reversed.csv", index=False)
 
-    actual = test_df['y'].values
-    predicted = forecast_df['DLinear'].values
+    actual = test_df_reverse_normalized['temp'].values
+    predicted = forecast_reverse_normalized['temp'].values
 
 
     mse = mean_squared_error(actual, predicted)

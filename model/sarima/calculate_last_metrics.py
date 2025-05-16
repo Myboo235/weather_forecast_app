@@ -16,6 +16,8 @@ def calculate_last_metrics():
     train_df = weather_df.iloc[:-8]
     test_df = weather_df.iloc[-8:]
 
+    test_df_reverse_normalized = inverse_predicted_z_scores(test_df, "y", "../../../data/scaler.pkl")
+
     with open('./sarima/sarima_parameters.json', 'r') as f:
         params = json.load(f)
 
@@ -41,8 +43,8 @@ def calculate_last_metrics():
     forecast_reverse_normalized = inverse_predicted_z_scores(forecast_df, "ARIMA", "../../../data/scaler.pkl")
     forecast_reverse_normalized.to_csv("./sarima/last_predict_reversed.csv", index=False)
 
-    actual = test_df['y'].values
-    predicted = forecast_df['ARIMA'].values
+    actual = test_df_reverse_normalized['temp'].values
+    predicted = forecast_reverse_normalized['temp'].values
 
 
     mse = mean_squared_error(actual, predicted)
