@@ -29,3 +29,13 @@ services:
       dockerfile: ./data/Dockerfile.dev
     volumes:
       - ./data:/app
+
+  server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/app
+      - ./data:/app/data

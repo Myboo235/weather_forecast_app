@@ -1,4 +1,4 @@
-from flask import Flask, redirect, send_from_directory
+from flask import Flask, redirect, send_from_directory, request
 from flask_restx import Api, Resource
 from api.routes import ns as weather_ns
 from flask_cors import CORS
@@ -30,6 +30,11 @@ class HomeResource(Resource):
 
 @app.errorhandler(404)
 def not_found(e):
+    path = request.path
+    # If path starts with /ui/, try redirecting without it
+    if path.startswith("/ui/"):
+        new_path = path[len("/ui/"):]
+        return redirect("/" + new_path)
     return redirect("/home")
 
 if __name__ == "__main__":

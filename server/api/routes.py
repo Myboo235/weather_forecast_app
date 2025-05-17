@@ -14,10 +14,11 @@ from utils.data_loader import load_normalized_data, load_historical_data, load_s
 from .schemas import register_models
 import config as cfg
 import pandas as pd
+import json
 
 ns = Namespace("api", description="Weather forecast operations")
 
-response_model, historical_response_model = register_models(ns)
+response_model, historical_response_model, metrics_response_model = register_models(ns)
 
 
 # @ns.route("/predict")
@@ -98,8 +99,31 @@ class SARIMAPredictResource(Resource):
                 "predictions": [],
             }, 500
 
+@ns.route("/metrics/sarima")
+class SARIMAMetricsResource(Resource):
+    @ns.doc("get_metrics_of_sarima")
+    @ns.marshal_with(metrics_response_model)
+    def get(self):
+        try:
+            metrics_file_path = "/model/sarima/metrics.json"
+            with open(metrics_file_path, 'r') as file:
+                metrics = json.load(file)
+
+            response = {
+                "status": 200,
+                "message": "Success",
+                "metrics": metrics,
+            }
+            return response
+        except Exception as e:
+            return {
+                "status": 500,
+                "message": f"Error: {str(e)}",
+                "metrics": {},
+            }, 500
+
 @ns.route("/predict/dlinear")
-class SARIMAPredictResource(Resource):
+class DLinearPredictResource(Resource):
     @ns.doc("get_temperature_forecast_using_dlinear")
     @ns.marshal_with(response_model)
     def get(self):
@@ -130,6 +154,28 @@ class SARIMAPredictResource(Resource):
                 "predictions": [],
             }, 500
 
+@ns.route("/metrics/dlinear")
+class DLinearMetricsResource(Resource):
+    @ns.doc("get_metrics_of_dlinear")
+    @ns.marshal_with(metrics_response_model)
+    def get(self):
+        try:
+            metrics_file_path = "/model/dlinear/metrics.json"
+            with open(metrics_file_path, 'r') as file:
+                metrics = json.load(file)
+
+            response = {
+                "status": 200,
+                "message": "Success",
+                "metrics": metrics,
+            }
+            return response
+        except Exception as e:
+            return {
+                "status": 500,
+                "message": f"Error: {str(e)}",
+                "metrics": {},
+            }, 500
 
 @ns.route("/historical")
 class HistoricalResource(Resource):

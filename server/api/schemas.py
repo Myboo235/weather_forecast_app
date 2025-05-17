@@ -41,4 +41,24 @@ def register_models(api):
         },
     )
 
-    return response_model, historical_response_model
+    metrics_model = api.model(
+        "MetricsResource",
+        {
+            "rmse": fields.Float,
+            "mse": fields.Float,
+            "mae": fields.Float,
+            "horizon": fields.Integer,
+            "model": fields.String,
+        },
+    )
+
+    metrics_response_model = api.model(
+        "MetricsResponse",
+        {
+            "status": fields.Integer,
+            "message": fields.String,
+            "metrics": fields.Nested(metrics_model),
+        },
+    )
+
+    return response_model, historical_response_model, metrics_response_model
