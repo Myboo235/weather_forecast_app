@@ -1,34 +1,38 @@
-fetch('header.html')
-    .then(response => response.text())
-    .then(data => {
-        document.querySelector('.header').innerHTML = data;
-    })
-    .catch(error => console.error('Error loading header.html:', error));
-const domain = "https://pbl7-weather-forecast-app-iqe3.onrender.com/api/historical";
-async function fetchHistoryMonthly(month, year) {
+const domain = "https://weather-forecast-app-b74b.onrender.com/api/historical";
+async function fetchHistoryMonthly(year, month, day) {
     const response = await fetch(`${domain}?month=${month}&year=${year}`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    console.log('Data:', data.data);
     return data.data;
-
 }
+
 async function getHistoryMonthly() {
     const historyMonthlyHtml = document.querySelector('.history_monthly_container');
     try {
         // Get the month selection value
+
+        const yearSelect = document.getElementById('year_select');
         const monthSelect = document.getElementById('month_select');
-        const month = monthSelect.value.split('-')[0];
-        const year = monthSelect.value.split('-')[1];
-        const historyMonthly = await fetchHistoryMonthly(month, year);
+        const daySelect = document.getElementById('day_select');
+        const historyMonthly = await fetchHistoryMonthly(yearSelect.value, monthSelect.value, daySelect.value);
+        // Add event listener for search button
+        const searchBtn = document.getElementById('search_button');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', async () => {
+                console.log(`Searching for month: ${monthSelect.value}, year: ${yearSelect.value}`);
+                // Refresh data with current selections
+                await getHistoryMonthly();
+            });
+        }
 
-        // Add event listener to handle month changes
-        monthSelect.addEventListener('change', () => {
-            getHistoryMonthly(); // Reload the data when month changes
+        //onchange month
+        monthSelect.addEventListener('change', async () => {
+            const month = monthSelect.value;
+            const year = yearSelect.value;
+            console.log(`Selected month: ${month}, year: ${year}`);
         });
-
         // Helper function to get weather icon based on time and cloud coverage
         const getWeatherIcon = (time, cloud) => {
             const hour = parseInt(time.split(':')[0]);
@@ -149,10 +153,9 @@ async function getHistoryMonthly() {
                             <img src="${entry.icon}" alt="Weather">
                         </div>
                         <div class="temperature">
-                            <div class="hi">Hi:${maxTemp.toFixed(1)}°</div>
-                            <div class="lo">Lo:${minTemp.toFixed(1)}°</div>
+                            <div class="rain">🌧️${entry.rain} mm</div>
+                            <div class="pressure">${entry.pressure} hPa</div>
                         </div>
-                        
                     </div>
                 `;
             });
@@ -272,6 +275,7 @@ function drawTemperatureLines(dayGroups) {
     // Wait for DOM to be fully loaded before executing
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
+    selectMonth();
     getHistoryMonthly();
 });
 
@@ -332,5 +336,47 @@ function initializeScrolling() {
     rightButton.addEventListener("click", rightScroll);
 }
 
+function selectMonth() {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const yearOptions = [];
+    const monthOptions = [];
+    const dayOptions = [];
+    for (let i = currentYear; i >= 2010; i--) {
+        yearOptions.push(i);
+        }
+    for (let i = 1; i <= 12; i++) {
+        monthOptions.push(i);
+    }
+    for (let i = 1; i <= 31; i++) {
+        dayOptions.push(i);
+    }
 
+    const yearSelect = document.getElementById('year_select');
+    const monthSelect = document.getElementById('month_select');
+    const daySelect = document.getElementById('day_select');
+
+    daySelect.innerHTML = '';
+    monthSelect.innerHTML = '';
+    yearSelect.innerHTML = '';
+
+    monthOptions.forEach(month => {
+        const option = document.createElement('option');
+        option.value = month;
+        option.textContent = month;
+        monthSelect.appendChild(option);
+    });
+    yearOptions.forEach(year => {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    });
+    dayOptions.forEach(day => {
+        const option = document.createElement('option');
+        option.value = day;
+        option.textContent = day;
+        daySelect.appendChild(option);
+    });
+}
 

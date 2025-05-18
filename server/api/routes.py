@@ -11,6 +11,7 @@ from flask_restx import Namespace, Resource
 
 from utils.time_helper import get_next_hours
 from utils.data_loader import load_normalized_data, load_historical_data, load_scaler
+from utils.get_weekly_stats import get_daily_min_max
 from .schemas import register_models
 import config as cfg
 import pandas as pd
@@ -18,7 +19,7 @@ import json
 
 ns = Namespace("api", description="Weather forecast operations")
 
-response_model, historical_response_model, metrics_response_model = register_models(ns)
+response_model, historical_response_model, metrics_response_model, weekly_predict_response_model = register_models(ns)
 
 
 # @ns.route("/predict")
@@ -210,6 +211,103 @@ class LSTMPredictResource(Resource):
                 "predictions": [],
             }, 500
 
+
+@ns.route("/predict_next_7_days_stats")
+class PredictNext7DaysStatsResource(Resource):
+    @ns.doc(params={
+        "model_name": "Model name to get data",
+    })
+    @ns.marshal_with(weekly_predict_response_model)
+    def get(self):
+        try:
+            model_arr = ["sarima", "dlinear"]
+            model_name = request.args.get("model_name")
+        
+            if not model_name or model_name not in model_arr:
+                return {
+                    "status": 400,
+                    "message": "Missing or not supported model",
+                    "predictions": [],
+                }, 400
+
+            try:
+                predicted_df = pd.read_csv(f"/model/{model_name}/{model_name}_forecast_next_7d_reversed.csv")
+                if "ds" not in predicted_df or "temp" not in predicted_df:
+                    raise Exception("Sorry, no numbers below zero") 
+            except:
+                return {
+                    "status": 400,
+                    "message": "Missing required columns in the forecast data",
+                    "predictions": [],
+                }, 400
+            
+            weeky_stats =  get_daily_min_max(predicted_df)
+
+            response = {
+                "status": 200,
+                "message": "Success",
+                "predictions": [
+                    {
+                        "date": date,
+                        "max_temp": round(float(max_temp), 2),
+                        "min_temp": round(float(min_temp), 2)
+                    } for date, max_temp, min_temp in zip(weeky_stats["date"], weeky_stats["max"], weeky_stats["min"])
+                ],
+            }
+            return response
+        except Exception as e:
+            return {
+                "status": 500,
+                "message": f"Server error: {str(e)}",
+                "data": [],
+            }, 500
+
+
+@ns.route("/predict_next_7_days")
+class PredictNext7DaysResource(Resource):
+    @ns.doc(params={
+        "model_name": "Model name to get data",
+    })
+    @ns.marshal_with(response_model)
+    def get(self):
+        try:
+            model_arr = ["sarima", "dlinear"]
+            model_name = request.args.get("model_name")
+        
+            if not model_name or model_name not in model_arr:
+                return {
+                    "status": 400,
+                    "message": "Missing or not supported model",
+                    "predictions": [],
+                }, 400
+
+            try:
+                predicted_df = pd.read_csv(f"/model/{model_name}/{model_name}_forecast_next_7d_reversed.csv")
+                if "ds" not in predicted_df or "temp" not in predicted_df:
+                    raise Exception("Sorry, no numbers below zero") 
+            except:
+                return {
+                    "status": 400,
+                    "message": "Missing required columns in the forecast data",
+                    "predictions": [],
+                }, 400
+            
+
+            response = {
+                "status": 200,
+                "message": "Success",
+                "predictions": [
+                    {"datetime": timestamp, "temperature": round(float(temp), 2)}
+                    for timestamp, temp in zip(predicted_df["ds"], predicted_df["temp"])
+                ],
+            }
+            return response
+        except Exception as e:
+            return {
+                "status": 500,
+                "message": f"Server error: {str(e)}",
+                "data": [],
+            }, 500
 
 @ns.route("/historical")
 class HistoricalResource(Resource):

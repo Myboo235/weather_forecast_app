@@ -1,48 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-     <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <div class="header">
-        <div class="header_search">
-            <div class="header_title">
-                <h2>Weather Forecast App</h2>
-            </div>
-            <input type="text" class="search" placeholder="Search for a city...">
-            <div id="search_button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="black" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-search">
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-            </div>
-        </div>
-        <div class="forecast_menu">
-            <div class="forecast_menu_item">
-            <a href="index.html">Weather</a>
-            </div>
-            <div class="forecast_menu_item">
-            <a href="index.html#hourly_forecast_container">Hourly</a>
-            </div>
-            <div class="forecast_menu_item">
-            <a href="index.html#weekly_forecast_container">Weekly</a>
-            </div>
-            <div class="forecast_menu_item">
-            <a href="../ui/history.html">History</a>
-            </div>
-            <div class="forecast_menu_item">
-            <a href="index.html#AreaChart">Graphs</a>
-            </div>
-        </div>
-        <hr style="margin: 16px 0;">
+<div class="header_container">
+    <div class="header_title">
+        Weather Forecast App
     </div>
-</body>
+    <p class="current_time"></p>
+    <div class="forecast_menu">
+        <a class="forecast_menu_item" href="index.html">Weather</a>
+        <a href="index.html#hourly_forecast_container" class="forecast_menu_item">Hourly</a>
+        <a class="forecast_menu_item" href="index.html#weekly_forecast_container">Weekly</a>
+        <a class="forecast_menu_item" href="../ui/history.html">History</a>
+        <a class="forecast_menu_item" href="index.html#chart">Graphs</a>
+    </div>
+    <hr style="margin: 16px 0;">
+</div>
 
-</html>
+<script>
+    setInterval(() => {
+        let currentTime = moment().format('YYYY-MM-DD HH:mm');
+        document.querySelector('.current_time').innerText = `${currentTime}`;
+    }, 1000);
+</script>

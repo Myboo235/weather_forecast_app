@@ -61,4 +61,22 @@ def register_models(api):
         },
     )
 
-    return response_model, historical_response_model, metrics_response_model
+    weekly_predict_model = api.model(
+        "WeeklyPrediction",
+        {
+            "date": fields.String(required=True),
+            "max_temp": fields.Float(required=True),
+            "min_temp": fields.Float(required=True),
+        },
+    )
+
+    weekly_predict_response_model = api.model(
+        "WeeklyPredictionResponse",
+        {
+            "status": fields.Integer,
+            "message": fields.String,
+            "predictions": fields.List(fields.Nested(weekly_predict_model)),
+        },
+    )
+
+    return response_model, historical_response_model, metrics_response_model, weekly_predict_response_model

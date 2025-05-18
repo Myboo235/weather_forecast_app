@@ -8,47 +8,70 @@
     <link rel="manifest" href="/ui/manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>Gradio Lite PWA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Weather forecast app</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $('.header').load('header.html');
+
+        });
+    </script>
 </head>
 
 <body>
     <script src="script.js"></script>
     <div class="header">
+
     </div>
 
     <div class="container">
         <div class="current_weather_container">
 
             <div class="current_weather_header">
-                <h3>CURRENT WEATHER</h3>
-                <p class="current_time"></p>
+                <h2>CURRENT WEATHER</h2>
+
+            </div>
+            <div class="current_weather_card">
+                <div class="current_left">
+                    <!-- <img src="https://www.awxcdn.com/adc-assets/images/weathericons/33.svg" alt="Weather Icon"
+                        class="weather_icon"> -->
+                    <div>
+                        Temperature
+                        <div class="current_temp">28°<span class="unit">C</span></div>
+                    </div>
+                </div>
+
+                <div class="current_right">
+                    <div class="current_wind">💨 Wind: N 4 km/h</div>
+                    <div class="current_rain">🌧️ Wind Gusts: 4 km/h</div>
+                    <div class="air_quality">Air Quality: <span class="aqi">Fair</span></div>
+                </div>
             </div>
 
-            <div class="current_weather_data">
-                <div class="current_temp">🌡️</div>
-                <div class="current_wind">💨</div>
-                <div class="current_rain">🌧️</div>
-            </div>
         </div>
 
         <div class="hourly_forecast_container" id="hourly_forecast_container">
             <div class="hourly_forecast_header">
                 <div>
-                    <h3>Hourly Weather Forecast</h3>
-                    <p>LSTM Forecast for the next 24 hours</p>
+                    <h2>HOURLY WEATHER FORECAST</h2>
+
+
                 </div>
 
-                <div class="metrics_evaluation">
+                <!-- <div class="metrics_evaluation">
                     <div class="metrics_evaluation_item">
                         <h3>📊 Độ lệch trung bình: 1.2°C</h3>
-
                     </div>
                     <div class="metrics_evaluation_item">
                         <h3>📈 Độ lệch lớn nhất: 2°C</h3>
                     </div>
-
-                </div>
+                </div> -->
+            </div>
+            <div class="hourly_forecast_model">
+                <h3>Model: SARIMA</h3>
             </div>
             <div class="scroll">
                 <button class="left" onclick="leftScroll()">
@@ -58,9 +81,30 @@
                         <path d="m15 18-6-6 6-6" />
                     </svg>
                 </button>
-                <div class="hourly_forecast_cards">
+                <div class="sarima_hourly_forecast_cards hourly_forecast_cards">
                 </div>
                 <button class="right" onclick="rightScroll()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-right-icon lucide-chevron-right">
+                        <path d="m9 18 6-6-6-6" />
+                    </svg>
+                </button>
+            </div>
+            <div class="hourly_forecast_model">
+                <h3>Model: DLINEAR</h3>
+            </div>
+            <div class="scroll_dlinear">
+                <button class="left_dlinear" onclick="leftScrollDlinear()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-left-icon lucide-chevron-left">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                </button>
+                <div class="dlinear_hourly_forecast_cards hourly_forecast_cards_dlinear">
+                </div>
+                <button class="right_dlinear" onclick="rightScrollDlinear()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="black" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-chevron-right-icon lucide-chevron-right">
@@ -75,18 +119,24 @@
         </div>
         <div class="weekly_forecast_container" id="weekly_forecast_container">
             <div class="weekly_forecast_header">
-                <h3>Weekly Weather Forecast</h3>
+                <h2>WEEKLY WEATHER FORECAST</h2>
                 <p>Forecast for the next 7 days</p>
             </div>
+            <select id="weekly_forecast_model" onclick="get_weekly_weather(this.value)"
+                onchange="onModelChange(this.value)">
+                <option value="dlinear" selected>DLinear</option>
+                <option value="sarima">SARIMA</option>
+            </select>
             <div class="weekly_forecast_cards">
             </div>
         </div>
-
-        <div class="chart">
-            <canvas id="AreaChart" style="width: 100%;"></canvas>
-        </div>
-        <div class="chart">
-            <canvas id="LineChart" style="width: 100%;"></canvas>
+        <div id="chart">
+            <div class="chart">
+                <canvas id="LineChart"></canvas>
+            </div>
+            <div class="chart">
+                <canvas id="AreaChart"></canvas>
+            </div>
         </div>
     </div>
 
