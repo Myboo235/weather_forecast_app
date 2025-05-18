@@ -1,4 +1,5 @@
 Date,Time,Weather,Temp,Rain,Cloud,Pressure,Wind,Gust
-"Sunday, 18 May 2025 2025",00:00,Partly Cloudy,24 °c,0.0 mm,30%,1010 mb,4 km/h,8 km/h
-"Sunday, 18 May 2025 2025",03:00,Patchy rain nearby,24 °c,0.3 mm,85%,1008 mb,4 km/h,8 km/h
-"Sunday, 18 May 2025 2025",06:00,Sunny,24 °c,0.0 mm,18%,1009 mb,5 km/h,9 km/h
+"Sunday, 18 May 2025 2025",00:00,Patchy rain nearby,24 °c,0.0 mm,88%,1010 mb,4 km/h,7 km/h
+"Sunday, 18 May 2025 2025",03:00,Patchy rain nearby,23 °c,0.0 mm,74%,1009 mb,4 km/h,8 km/h
+"Sunday, 18 May 2025 2025",06:00,Sunny,23 °c,0.0 mm,24%,1009 mb,5 km/h,9 km/h
+"Sunday, 18 May 2025 2025",09:00,Sunny,30 °c,0.0 mm,21%,1010 mb,4 km/h,4 km/h
