@@ -9,7 +9,7 @@ ADD_PATH="${2:-.}"  # Default to adding everything
 git config user.name "github-actions"
 git config user.email "github-actions@github.com"
 
-git pull --rebase
+git pull || git pull --rebase
 git add "$ADD_PATH"
 git commit -m "$COMMIT_MSG - $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
 
@@ -25,7 +25,7 @@ while [ $COUNT -lt $MAX_RETRIES ]; do
   else
     echo "Push failed. Retrying in 30 seconds... (Attempt $((COUNT+1))/$MAX_RETRIES)"
     sleep 30
-    git pull --rebase
+    git pull || git pull --rebase
     COUNT=$((COUNT+1))
   fi
 done
