@@ -177,6 +177,40 @@ class DLinearMetricsResource(Resource):
                 "metrics": {},
             }, 500
 
+@ns.route('/predict/lstm')
+class LSTMPredictResource(Resource):
+    @ns.doc("get_temperature_forecast")
+    @ns.marshal_with(response_model)
+    def get(self):
+        try:
+            predicted_df = pd.read_csv("/model/lstm/lstm_forecast_reversed.csv")
+            
+            if "ds" not in predicted_df or "temp" not in predicted_df:
+                return {
+                    "status": 400,
+                    "message": "Missing required columns in the forecast data",
+                    "predictions": [],
+                }, 400
+            
+
+            response = {
+                "status": 200,
+                "message": "Success",
+                "predictions": [
+                    {"datetime": timestamp, "temperature": round(float(temp), 2)}
+                    for timestamp, temp in zip(predicted_df["ds"], predicted_df["temp"])
+                ],
+            }
+            return response
+        except Exception as e:
+            return {
+                "status": 500,
+                "message": f"Error: {str(e)}",
+                "predictions": [],
+                "predictions": [],
+            }, 500
+
+
 @ns.route("/historical")
 class HistoricalResource(Resource):
     @ns.doc(params={

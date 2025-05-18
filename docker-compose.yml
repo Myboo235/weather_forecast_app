@@ -38,4 +38,6 @@ services:
       - "8000:8000"
     volumes:
       - ./server:/app
-      - ./data:/app/data
+      - ./data:/data
+      - ./model:/model
+      - ./ui:/ui

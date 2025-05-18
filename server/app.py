@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(
     __name__,
     static_folder="/ui",        # Folder for static frontend files
-    static_url_path=""         # Serve static files at root "/"
+    static_url_path="/ui"         # Serve static files at root "/"
 )
 app.config["SWAGGER_UI_DOC_EXPANSION"] = "list"
 app.config['RESTX_MASK_SWAGGER'] = False
@@ -22,20 +22,10 @@ api = Api(
 
 api.add_namespace(weather_ns, path="/api")
 
-@api.route("/home")
-class HomeResource(Resource):
-    def get(self):
-        return send_from_directory(app.static_folder, "index.html")
-
-
 @app.errorhandler(404)
 def not_found(e):
-    path = request.path
-    # If path starts with /ui/, try redirecting without it
-    if path.startswith("/ui/"):
-        new_path = path[len("/ui/"):]
-        return redirect("/" + new_path)
-    return redirect("/home")
+    return redirect("/ui/index.html")
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

@@ -105,6 +105,35 @@ jobs:
           chmod +x .github/scripts/safe_git_push.sh
           .github/scripts/safe_git_push.sh "model: auto-run DLinear forecast" "model/dlinear"
 
+  run-lstm-forecast:
+    needs: crawl-weather
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull newest data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull
+
+      - name: Set up Docker Compose
+        run: docker compose version
+
+      - name: Build all Docker services
+        run: docker compose build model
+
+      - name: Run LSTM forecast
+        run: |
+          docker compose run --rm model python3 lstm/lstm_forecast.py
+
+      - name: Commit results
+        run: |
+          chmod +x .github/scripts/safe_git_push.sh
+          .github/scripts/safe_git_push.sh "model: auto-run LSTM forecast" "model/lstm"
+
   calculate-sarima-metrics:
     needs: run-sarima-forecast
     runs-on: ubuntu-latest
