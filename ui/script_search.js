@@ -1,6 +1,10 @@
 const domain = "https://weather-forecast-app-b74b.onrender.com/api/historical";
 async function fetchHistoryMonthly(year, month, day) {
-  const response = await fetch(`${domain}?month=${month}&year=${year}`);
+  const url =
+    day && day !== ""
+      ? `${domain}?month=${month}&year=${year}&date=${day}`
+      : `${domain}?month=${month}&year=${year}`;
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -392,6 +396,12 @@ function selectMonth() {
     option.textContent = year;
     yearSelect.appendChild(option);
   });
+
+  const emptyOption = document.createElement("option");
+  emptyOption.value = "";
+  emptyOption.textContent = "all";
+  daySelect.appendChild(emptyOption);
+
   dayOptions.forEach((day) => {
     const option = document.createElement("option");
     option.value = day;

@@ -116,15 +116,14 @@ a {
   align-items: center;
 }
 
-.hourly_forecast_cards,
-.hourly_forecast_cards_dlinear {
+.hourly_forecast_cards {
   position: relative;
   width: 85%;
   padding: 40px 0px;
   height: auto;
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
