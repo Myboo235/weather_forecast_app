@@ -19,12 +19,16 @@ a {
   color: inherit;
 }
 
+.header {
+  margin: 20px auto;
+}
+
 .header_container {
   display: flex;
   flex-direction: column;
   width: 40%;
-  margin: 0 auto;
   padding: 32px;
+  margin: 0 auto;
   box-sizing: border-box;
   border-radius: 16px;
   background-color: white;
@@ -358,8 +362,8 @@ canvas {
 
 @media (max-width: 1600px) {
   /* Layout elements */
-  .header,
-  .container {
+  .container,
+  .header_container {
     width: 85%;
   }
 
@@ -611,4 +615,15 @@ select:focus {
 .current_wind,
 .current_rain {
   font-weight: 500;
+}
+
+.area_map {
+  margin: 20px auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.area_map > h2 {
+  text-transform: uppercase;
 }

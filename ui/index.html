@@ -53,6 +53,16 @@
 
         </div>
 
+        <div class="area_map">
+            <h2>Meteorological Map</h2>
+            <select id="area_map_type" onchange="onMapTypeChange(this.value)">
+                <option value="windy" selected>Windy</option>
+                <option value="ventusky">Ventusky</option>
+                <option value="google">Google Map</option>
+            </select>
+            <div id="area_map" style="margin-top: 16px;"></div>
+        </div>
+
         <div class="hourly_forecast_container" id="hourly_forecast_container">
             <div class="hourly_forecast_header">
                 <div>
@@ -122,10 +132,9 @@
                 <h2>WEEKLY WEATHER FORECAST</h2>
                 <p>Forecast for the next 7 days</p>
             </div>
-            <select id="weekly_forecast_model" onclick="get_weekly_weather(this.value)"
-                onchange="onModelChange(this.value)">
-                <option value="dlinear" selected>DLinear</option>
-                <option value="sarima">SARIMA</option>
+            <select id="weekly_forecast_model" onchange="onModelChange(this.value)">
+                <option value="sarima" selected>SARIMA</option>
+                <option value="dlinear">DLinear</option>
             </select>
             <div class="weekly_forecast_cards">
             </div>

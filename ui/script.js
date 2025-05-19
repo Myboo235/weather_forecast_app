@@ -2,8 +2,9 @@ window.onload = function () {
   get_weekly_weather("dlinear");
   get_hourly_weather("sarima");
   get_hourly_weather("dlinear");
-  drawLineChart("dlinear");
-  drawAreaChart("dlinear");
+  drawLineChart("sarima");
+  drawAreaChart("sarima");
+  onMapTypeChange("windy");
 
   document.querySelector(".current_temp").innerText = `🌡️29°C`;
   document.querySelector(".current_wind").innerText = `💨 Wind: 30 km/h`;
@@ -14,6 +15,27 @@ function onModelChange(modelName) {
   get_weekly_weather(modelName);
   drawLineChart(modelName);
   drawAreaChart(modelName);
+}
+
+function onMapTypeChange(type) {
+  const container = document.getElementById("area_map");
+  let iframe = "";
+
+  if (type === "windy") {
+    iframe = `<iframe width="100%" height="450"
+        src="https://embed.windy.com/embed2.html?lat=16.07&lon=108.22&detailLat=16.07&detailLon=108.22&width=650&height=450&zoom=7&level=surface&overlay=wind"
+        frameborder="0" style="border-radius: 12px;"></iframe>`;
+  } else if (type === "ventusky") {
+    iframe = `<iframe width="100%" height="450"
+        src="https://www.ventusky.com/?p=16.1;108.2;6&l=wind-10m"
+        frameborder="0" style="border-radius: 12px;"></iframe>`;
+  } else if (type === "google") {
+    iframe = `<iframe width="100%" height="450"
+        src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Da+Nang,Vietnam"
+        frameborder="0" style="border-radius: 12px;"></iframe>`;
+  }
+
+  container.innerHTML = iframe;
 }
 
 function fetchdata() {

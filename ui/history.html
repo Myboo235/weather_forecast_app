@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="search.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -25,21 +26,23 @@
     <div class="header">
     </div>
     <div class="container">
-        <div class="select_month_container">
-            <h5>Select Year</h5>
-            <select id="year_select">
-            </select>
-            <h5>Select Month:</h5>
-            <select id="month_select">
-            </select>
-            <h5>Select Day:</h5>
-            <select id="day_select">
-            </select>
-            <button id="search_button">Search</button>
-        </div>
-        <h2>Past Weather in Da Nang — Graph</h2>
-        <div class="history_monthly_container">
-            <canvas id="history_monthly_chart" width="400" height="400"></canvas>
+        <div class="history_container">
+            <h2>Past Weather in Da Nang chart</h2>
+            <div class="select_month_container">
+                <h5>Day:</h5>
+                <select id="day_select">
+                </select>
+                <h5>Month:</h5>
+                <select id="month_select">
+                </select>
+                <h5>Year</h5>
+                <select id="year_select">
+                </select>
+                <button id="search_button">Search</button>
+            </div>
+            <div class="history_monthly_container">
+                <canvas id="history_monthly_chart" width="400" height="400"></canvas>
+            </div>
         </div>
     </div>
 
