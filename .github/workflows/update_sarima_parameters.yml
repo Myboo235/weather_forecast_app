@@ -1,9 +1,6 @@
 name: Update SARIMA parameters
 
 on:
-  push:
-    branches:
-      - "fix_cronjob"
   schedule:
     - cron: "10 1 * * 6" # Every saturday at 1:10 a.m
   workflow_dispatch:

@@ -84,7 +84,7 @@
                 <h3>Model: SARIMA</h3>
             </div>
             <div class="scroll">
-                <button class="left" onclick="leftScroll()">
+                <button class="left" onclick="leftScroll('sarima')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-chevron-left-icon lucide-chevron-left">
@@ -93,7 +93,7 @@
                 </button>
                 <div class="sarima_hourly_forecast_cards hourly_forecast_cards">
                 </div>
-                <button class="right" onclick="rightScroll()">
+                <button class="right" onclick="rightScroll('sarima')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-chevron-right-icon lucide-chevron-right">
@@ -101,11 +101,15 @@
                     </svg>
                 </button>
             </div>
+            <div class="model_metrics">
+                Evaluation of last 8 steps
+                <div class="metrics_box" id="sarima-container"></div>
+            </div>
             <div class="hourly_forecast_model">
                 <h3>Model: DLINEAR</h3>
             </div>
             <div class="scroll_dlinear">
-                <button class="left_dlinear" onclick="leftScrollDlinear()">
+                <button class="left_dlinear" onclick="leftScroll('dlinear')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-chevron-left-icon lucide-chevron-left">
@@ -114,7 +118,7 @@
                 </button>
                 <div class="dlinear_hourly_forecast_cards hourly_forecast_cards">
                 </div>
-                <button class="right_dlinear" onclick="rightScrollDlinear()">
+                <button class="right_dlinear" onclick="rightScroll('dlinear')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-chevron-right-icon lucide-chevron-right">
@@ -122,9 +126,30 @@
                     </svg>
                 </button>
             </div>
-            <div class="metrics_evaluation_header">
-                <h3>Metrics Evaluation</h3>
-                <p>Evaluation of the LSTM model</p>
+            <div class="model_metrics">
+                Evaluation of last 8 steps
+                <div class="metrics_box" id="dlinear-container"></div>
+            </div>
+            <div class="hourly_forecast_model">
+                <h3>Model: LSTM</h3>
+            </div>
+            <div class="scroll_dlinear">
+                <button class="left_dlinear" onclick="leftScroll('lstm')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-left-icon lucide-chevron-left">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                </button>
+                <div class="lstm_hourly_forecast_cards hourly_forecast_cards">
+                </div>
+                <button class="right_dlinear" onclick="rightScroll('lstm')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-right-icon lucide-chevron-right">
+                        <path d="m9 18 6-6-6-6" />
+                    </svg>
+                </button>
             </div>
         </div>
         <div class="weekly_forecast_container" id="weekly_forecast_container">

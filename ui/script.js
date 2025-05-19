@@ -1,15 +1,25 @@
-window.onload = function () {
-  get_weekly_weather("dlinear");
+window.onload = fetchdata;
+
+function fetchdata() {
+  get_weekly_weather("sarima");
+
   get_hourly_weather("sarima");
   get_hourly_weather("dlinear");
+  get_hourly_weather("lstm");
+
+  loadMetrics("sarima");
+  loadMetrics("dlinear");
+  // loadMetrics("lstm");
+
   drawLineChart("sarima");
   drawAreaChart("sarima");
+
   onMapTypeChange("windy");
 
   document.querySelector(".current_temp").innerText = `🌡️29°C`;
   document.querySelector(".current_wind").innerText = `💨 Wind: 30 km/h`;
   document.querySelector(".current_rain").innerText = `🌧️ Rain: 0 mm`;
-};
+}
 
 function onModelChange(modelName) {
   get_weekly_weather(modelName);
@@ -38,64 +48,39 @@ function onMapTypeChange(type) {
   container.innerHTML = iframe;
 }
 
-function fetchdata() {
-  fetch("../data/weather_cleaned.csv")
-    .then((response) => response.text())
-    .then((text) => {
-      const rows = text.trim().split("\n").slice(1);
+async function loadMetrics(model) {
+  const container = document.getElementById(`${model}-container`);
+  const modelTitle = document
+    .querySelector(`#${model}-container`)
+    ?.parentElement?.querySelector(".model_title");
 
-      const data = rows.map((row) => {
-        const cols = row.split(",");
-        return {
-          Date: cols[0],
-          Time: cols[1],
-          Weather: cols[2],
-          Temp: parseFloat(cols[3]),
-          Rain: parseFloat(cols[4]),
-          Cloud: parseFloat(cols[5]),
-          Pressure: parseFloat(cols[6]),
-          Wind: parseFloat(cols[7]).toFixed(2),
-          Gust: parseFloat(cols[8]),
-          DateTime: moment(`${cols[0]} ${cols[1]}`, "YYYY-MM-DD HH:mm"),
-        };
-      });
+  try {
+    const response = await fetch(`/api/metrics/${model}`);
+    const data = await response.json();
 
-      const now = moment();
+    if (data.status === 200 && data.metrics) {
+      const metrics = data.metrics;
+      if (modelTitle) modelTitle.textContent = metrics.model;
 
-      // Find the closest time
-      const closest = data.reduce((prev, curr) => {
-        return Math.abs(curr.DateTime.diff(now)) <
-          Math.abs(prev.DateTime.diff(now))
-          ? curr
-          : prev;
-      });
+      const entries = [
+        { label: "RMSE", value: metrics.rmse.toFixed(3) },
+        { label: "MSE", value: metrics.mse.toFixed(3) },
+        { label: "MAE", value: metrics.mae.toFixed(3) },
+        { label: "Horizon", value: metrics.horizon },
+      ];
 
-      // Display the matched data
-      // document.querySelector(
-      //   ".current_temp"
-      // ).innerText = `🌡️ Temp: ${closest["Temp"]}°C`;
-      // document.querySelector(
-      //   ".current_wind"
-      // ).innerText = `💨 Wind: ${closest["Wind"]} km/h`;
-      // document.querySelector(
-      //   ".current_rain"
-      // ).innerText = `🌧️ Rain: ${closest["Rain"]} mm`;
-      // console.log("data");
-      // // Optional: show current time
-      // document.querySelector(".current_time").innerText = `${now.format(
-      //   "YYYY-MM-DD HH:mm"
-      // )}`;
-      // get_hourly_weather("sarima");
-      // get_hourly_weather_dlinear();
-      // get_weekly_weather(data);
-      // drawAreaChart(data);
-      // drawLineChart(data);
-    })
-    .catch((error) => {
-      console.error("Error reading CSV:", error);
-    });
+      for (const entry of entries) {
+        const div = document.createElement("div");
+        div.className = "metric_item";
+        div.innerHTML = `<h4>${entry.label}</h4><p>${entry.value}</p>`;
+        container.appendChild(div);
+      }
+    }
+  } catch (error) {
+    console.error(`Error fetching metrics for ${model}:`, error);
+  }
 }
-fetchdata();
+
 setInterval(function () {
   fetchdata();
 }, 2 * 60 * 60 * 1000);
@@ -487,16 +472,16 @@ async function drawLineChart(modelName) {
   }
 }
 
-function leftScroll() {
-  const scrollCards = document.querySelector(".hourly_forecast_cards");
+function leftScroll(model) {
+  const scrollCards = document.querySelector(`.${model}_hourly_forecast_cards`);
   scrollCards.scrollBy({
     left: -205,
     behavior: "smooth",
   });
 }
 
-function rightScroll() {
-  const scrollCards = document.querySelector(".hourly_forecast_cards");
+function rightScroll(model) {
+  const scrollCards = document.querySelector(`.${model}_hourly_forecast_cards`);
   scrollCards.scrollBy({
     left: 205,
     behavior: "smooth",
