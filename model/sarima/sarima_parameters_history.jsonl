@@ -4,3 +4,4 @@
 {"order": [3, 0, 0], "seasonal_order": [2, 1, 0], "season_length": 8, "aic": -15963.991751489273, "model_string": "ARIMA(3,0,0)(2,1,0)[8]                   ", "timestamp": "2025-05-10T02:45:49.531514"}
 {"order": [3, 0, 0], "seasonal_order": [2, 1, 0], "season_length": 8, "aic": -15766.052762487889, "model_string": "ARIMA(3,0,0)(2,1,0)[8]                   ", "timestamp": "2025-05-17T02:50:18.929146"}
 {"order": [3, 0, 0], "seasonal_order": [2, 1, 0], "season_length": 8, "aic": -15664.972784466896, "model_string": "ARIMA(3,0,0)(2,1,0)[8]                   ", "timestamp": "2025-05-24T02:49:28.613693"}
+{"order": [3, 0, 0], "seasonal_order": [2, 1, 0], "season_length": 8, "aic": -15542.695574285492, "model_string": "ARIMA(3,0,0)(2,1,0)[8]                   ", "timestamp": "2025-05-31T02:52:26.550906"}
