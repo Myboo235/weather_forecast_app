@@ -29,3 +29,11 @@ def load_model(model_path, input_size=5, hidden_size=32, fc1_size=256, device=No
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
     return model, device
+
+class LSTMConfig:
+    N_HOURS = 8
+    N_FEATURES = 5
+    N_PREDICT = 1
+    LR = 0.001
+    EPOCHS = 30
+    BATCH_SIZE = 16

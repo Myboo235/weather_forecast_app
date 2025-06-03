@@ -1,7 +1,7 @@
 import tensorflow as tf
 import datetime
 import os
-import config as cfg
+from lstm_model import LSTMConfig as cfg
 from utils.data_loader import create_dataset, load_retrain_data
 
 
