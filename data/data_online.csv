@@ -1,4 +1,5 @@
 Date,Time,Weather,Temp,Rain,Cloud,Pressure,Wind,Gust
-"Sunday, 03 August 2025 2025",00:00,Clear,27 °c,0.0 mm,14%,1005 mb,12 km/h,20 km/h
-"Sunday, 03 August 2025 2025",03:00,Clear,27 °c,0.0 mm,10%,1003 mb,14 km/h,22 km/h
-"Sunday, 03 August 2025 2025",06:00,Sunny,26 °c,0.0 mm,15%,1004 mb,15 km/h,23 km/h
+"Sunday, 03 August 2025 2025",00:00,Clear,26 °c,0.0 mm,12%,1005 mb,12 km/h,20 km/h
+"Sunday, 03 August 2025 2025",03:00,Clear,26 °c,0.0 mm,8%,1003 mb,14 km/h,23 km/h
+"Sunday, 03 August 2025 2025",06:00,Sunny,26 °c,0.0 mm,10%,1004 mb,15 km/h,23 km/h
+"Sunday, 03 August 2025 2025",09:00,Patchy rain nearby,29 °c,0.0 mm,80%,1005 mb,17 km/h,21 km/h
