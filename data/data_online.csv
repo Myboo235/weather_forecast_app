@@ -1,8 +1,8 @@
 Date,Time,Weather,Temp,Rain,Cloud,Pressure,Wind,Gust
-"Sunday, 24 August 2025 2025",00:00,Mist,25 °c,0.0 mm,34%,1008 mb,3 km/h,6 km/h
-"Sunday, 24 August 2025 2025",03:00,Patchy light drizzle,25 °c,0.5 mm,56%,1007 mb,4 km/h,6 km/h
-"Sunday, 24 August 2025 2025",06:00,Mist,24 °c,0.0 mm,49%,1008 mb,5 km/h,8 km/h
-"Sunday, 24 August 2025 2025",09:00,Patchy rain nearby,28 °c,0.3 mm,89%,1009 mb,8 km/h,9 km/h
-"Sunday, 24 August 2025 2025",12:00,Patchy rain nearby,32 °c,0.1 mm,75%,1007 mb,5 km/h,7 km/h
-"Sunday, 24 August 2025 2025",15:00,Patchy rain nearby,33 °c,0.1 mm,87%,1004 mb,2 km/h,2 km/h
-"Sunday, 24 August 2025 2025",18:00,Light rain shower,29 °c,1.0 mm,84%,1004 mb,7 km/h,13 km/h
+"Sunday, 24 August 2025 2025",00:00,Fog,23 °c,0.0 mm,100%,1008 mb,3 km/h,5 km/h
+"Sunday, 24 August 2025 2025",03:00,Fog,22 °c,0.0 mm,100%,1007 mb,3 km/h,6 km/h
+"Sunday, 24 August 2025 2025",06:00,Fog,22 °c,0.0 mm,100%,1008 mb,3 km/h,6 km/h
+"Sunday, 24 August 2025 2025",09:00,Sunny,27 °c,0.0 mm,16%,1008 mb,6 km/h,7 km/h
+"Sunday, 24 August 2025 2025",12:00,Light drizzle,24 °c,0.5 mm,76%,1007 mb,6 km/h,9 km/h
+"Sunday, 24 August 2025 2025",15:00,Patchy rain nearby,27 °c,0.0 mm,66%,1004 mb,12 km/h,15 km/h
+"Sunday, 24 August 2025 2025",18:00,Light rain shower,22 °c,0.2 mm,86%,1005 mb,7 km/h,14 km/h
